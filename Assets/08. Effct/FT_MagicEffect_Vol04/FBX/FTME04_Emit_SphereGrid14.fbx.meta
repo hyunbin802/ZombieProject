@@ -1,0 +1,145 @@
+fileFormatVersion: 2
+guid: 28abd4948f466af46baee2b045677dae
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: ME04_SphereGrid14_nurbs_surf0
+    100004: ME04_SphereGrid14_nurbs_surf1
+    100006: ME04_SphereGrid14_nurbs_surf10
+    100008: ME04_SphereGrid14_nurbs_surf11
+    100010: ME04_SphereGrid14_nurbs_surf12
+    100012: ME04_SphereGrid14_nurbs_surf13
+    100014: ME04_SphereGrid14_nurbs_surf14
+    100016: ME04_SphereGrid14_nurbs_surf15
+    100018: ME04_SphereGrid14_nurbs_surf16
+    100020: ME04_SphereGrid14_nurbs_surf17
+    100022: ME04_SphereGrid14_nurbs_surf18
+    100024: ME04_SphereGrid14_nurbs_surf19
+    100026: ME04_SphereGrid14_nurbs_surf2
+    100028: ME04_SphereGrid14_nurbs_surf20
+    100030: ME04_SphereGrid14_nurbs_surf21
+    100032: ME04_SphereGrid14_nurbs_surf22
+    100034: ME04_SphereGrid14_nurbs_surf23
+    100036: ME04_SphereGrid14_nurbs_surf24
+    100038: ME04_SphereGrid14_nurbs_surf25
+    100040: ME04_SphereGrid14_nurbs_surf26
+    100042: ME04_SphereGrid14_nurbs_surf27
+    100044: ME04_SphereGrid14_nurbs_surf28
+    100046: ME04_SphereGrid14_nurbs_surf29
+    100048: ME04_SphereGrid14_nurbs_surf3
+    100050: ME04_SphereGrid14_nurbs_surf30
+    100052: ME04_SphereGrid14_nurbs_surf31
+    100054: ME04_SphereGrid14_nurbs_surf32
+    100056: ME04_SphereGrid14_nurbs_surf33
+    100058: ME04_SphereGrid14_nurbs_surf34
+    100060: ME04_SphereGrid14_nurbs_surf35
+    100062: ME04_SphereGrid14_nurbs_surf36
+    100064: ME04_SphereGrid14_nurbs_surf37
+    100066: ME04_SphereGrid14_nurbs_surf38
+    100068: ME04_SphereGrid14_nurbs_surf39
+    100070: ME04_SphereGrid14_nurbs_surf4
+    100072: ME04_SphereGrid14_nurbs_surf5
+    100074: ME04_SphereGrid14_nurbs_surf6
+    100076: ME04_SphereGrid14_nurbs_surf7
+    100078: ME04_SphereGrid14_nurbs_surf8
+    100080: ME04_SphereGrid14_nurbs_surf9
+    400000: //RootNode
+    400002: ME04_SphereGrid14_nurbs_surf0
+    400004: ME04_SphereGrid14_nurbs_surf1
+    400006: ME04_SphereGrid14_nurbs_surf10
+    400008: ME04_SphereGrid14_nurbs_surf11
+    400010: ME04_SphereGrid14_nurbs_surf12
+    400012: ME04_SphereGrid14_nurbs_surf13
+    400014: ME04_SphereGrid14_nurbs_surf14
+    400016: ME04_SphereGrid14_nurbs_surf15
+    400018: ME04_SphereGrid14_nurbs_surf16
+    400020: ME04_SphereGrid14_nurbs_surf17
+    400022: ME04_SphereGrid14_nurbs_surf18
+    400024: ME04_SphereGrid14_nurbs_surf19
+    400026: ME04_SphereGrid14_nurbs_surf2
+    400028: ME04_SphereGrid14_nurbs_surf20
+    400030: ME04_SphereGrid14_nurbs_surf21
+    400032: ME04_SphereGrid14_nurbs_surf22
+    400034: ME04_SphereGrid14_nurbs_surf23
+    400036: ME04_SphereGrid14_nurbs_surf24
+    400038: ME04_SphereGrid14_nurbs_surf25
+    400040: ME04_SphereGrid14_nurbs_surf26
+    400042: ME04_SphereGrid14_nurbs_surf27
+    400044: ME04_SphereGrid14_nurbs_surf28
+    400046: ME04_SphereGrid14_nurbs_surf29
+    400048: ME04_SphereGrid14_nurbs_surf3
+    400050: ME04_SphereGrid14_nurbs_surf30
+    400052: ME04_SphereGrid14_nurbs_surf31
+    400054: ME04_SphereGrid14_nurbs_surf32
+    400056: ME04_SphereGrid14_nurbs_surf33
+    400058: ME04_SphereGrid14_nurbs_surf34
+    400060: ME04_SphereGrid14_nurbs_surf35
+    400062: ME04_SphereGrid14_nurbs_surf36
+    400064: ME04_SphereGrid14_nurbs_surf37
+    400066: ME04_SphereGrid14_nurbs_surf38
+    400068: ME04_SphereGrid14_nurbs_surf39
+    400070: ME04_SphereGrid14_nurbs_surf4
+    400072: ME04_SphereGrid14_nurbs_surf5
+    400074: ME04_SphereGrid14_nurbs_surf6
+    400076: ME04_SphereGrid14_nurbs_surf7
+    400078: ME04_SphereGrid14_nurbs_surf8
+    400080: ME04_SphereGrid14_nurbs_surf9
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: ME04_SphereGrid14
+    9500000: //RootNode
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .100000001
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
