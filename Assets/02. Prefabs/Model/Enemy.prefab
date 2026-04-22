@@ -147,7 +147,7 @@ MonoBehaviour:
   isDie: 0
   enemyMode: 1
   enemyKind: 1
-  hp: 99
+  hp: 100
   speed: 3
   findDist: 15
   traceDist: 11

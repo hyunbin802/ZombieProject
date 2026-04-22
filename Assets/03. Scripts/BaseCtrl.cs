@@ -92,13 +92,14 @@ public class BaseCtrl : MonoBehaviour
 
         //자기 자신의 Transform 연결
         head = transform.Find("turret_2/Head").GetComponent<Transform>();
+
         //AudioSource 컴포넌트를 해당 변수에 할당
         source = GetComponent<AudioSource>();
         //처음에 MuzzleFlash 를 비활성화  
         muzzleFlash.SetActive(false);
     }
 
-    // Start is called before the first frame update
+    // 몬스터 추척 시작 함수
     public void StartBase()
     {
         // 일정 간격으로 주변의 가장 가까운 Enemy를 찾는 코루틴 
@@ -121,12 +122,12 @@ public class BaseCtrl : MonoBehaviour
         //위에서 미리 생성한 ray를 인자로 전달, out(메서드 안에서 메서드 밖으로 데이타를 전달 할때 사용)hit, ray 거리
         if (Physics.Raycast(ray, out hitInfo, 13.0f))
         {
-            // hitInfo.point 는 월드좌표이다 따라서 로컬 좌표로 변환
-            Vector3 posValue = firePos.InverseTransformPoint(hitInfo.point);
-            //타겟 거리체크 레이저 생성
-            rayLine.SetPosition(0, posValue);
-            //타겟에 레이저 Dot 생성 
-            rayDot.localPosition = posValue;
+             // hitInfo.point 는 월드좌표이다 따라서 로컬 좌표로 변환
+             Vector3 posValue = firePos.InverseTransformPoint(hitInfo.point);
+             //타겟 거리체크 레이저 생성
+             rayLine.SetPosition(0, posValue);
+             //타겟에 레이저 Dot 생성 
+             rayDot.localPosition = posValue;
 
             if (isEnemyDetected && hitInfo.collider.tag == "Enemy")
             {
@@ -154,20 +155,20 @@ public class BaseCtrl : MonoBehaviour
             //적을 봐라봄  
             if (isEnemyDetected)
             {
-                if (Time.time > enemyLookTime)
-                {
-
-                    //enemyLookRotation = Quaternion.LookRotation(-(EnemyTarget.forward)); // - 해줘야 바라봄  
-                    enemyLookRotation = Quaternion.LookRotation(EnemyTarget.position - head.position); // - 해줘야 바라봄  
-                    head.rotation = Quaternion.Lerp(head.rotation, enemyLookRotation, Time.deltaTime * 2.0f);
-                    enemyLookTime = Time.time + 0.01f;
-                }
-            }
+                 if (Time.time > enemyLookTime)
+                 {
+                        //enemyLookRotation = Quaternion.LookRotation(-(EnemyTarget.forward)); // - 해줘야 바라봄  
+                        enemyLookRotation = Quaternion.LookRotation(EnemyTarget.position - head.position); // - 해줘야 바라봄  
+                        head.rotation = Quaternion.Lerp(head.rotation, enemyLookRotation, Time.deltaTime * 15.0f);
+                        enemyLookTime = Time.time + 0.01f;
+                 }
+             }
         }
+
         //만약 발사가 true 이면....
         if (isEnemyDetected && LockOn)
         {
-            if (Time.time > bulletSpeed)
+            if(Time.time > bulletSpeed)
             {
                 //일정 주기로 발사
                 ShotStart();
@@ -183,9 +184,9 @@ public class BaseCtrl : MonoBehaviour
         // TransformDirection 함수는 방향(벡터)을 로컬 좌표계 기준에서 월드 좌표계 기준으로 변환한다
         Vector3 rayForward = transform.TransformDirection(Vector3.forward);
 
-        if(Physics.Raycast(firePos.position, rayForward, 30f))
+        if(Physics.Raycast(firePos.position, rayForward, 13f))
         {
-            Debug.DrawRay(transform.position, rayForward * 30.0f, Color.green);
+            Debug.DrawRay(transform.position, rayForward * 13.0f, Color.green);
         }
     }
     */
@@ -237,9 +238,8 @@ public class BaseCtrl : MonoBehaviour
         }
     }
 
-
     //터렛 발사
-    private void ShotStart()
+    private void  ShotStart()
     {
         //잠시 기다리는 로직처리를 위해 코루틴 함수로 호출
         StartCoroutine(this.FireStart());
@@ -271,7 +271,6 @@ public class BaseCtrl : MonoBehaviour
 
         //비활성
         muzzleFlash.SetActive(false);
-
     }
 
     //인스펙터에 스크립트 우 클릭시 컨텍스트 메뉴에서 함수호출 가능

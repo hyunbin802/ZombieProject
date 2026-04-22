@@ -1,32 +1,35 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class DoorTrigger : MonoBehaviour
 {
-    public Animator anim;
-    public NavMeshObstacle obstacle;
+    
+    //애니메이터 연결 레퍼런스
+    private Animator myAnim;
 
     private void Awake()
     {
-        if (anim == null) anim = GetComponent<Animator>();
-        if (obstacle == null) obstacle = GetComponent<NavMeshObstacle>();
+        myAnim = GetComponent<Animator>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    //만약 문 앞에 콜라이더와 충돌이 발생하면...이 함수가 호출
+    void OnTriggerEnter(Collider col)
     {
-        if (other.CompareTag("Player"))
+        // 충돌 게임오브젝트의 테그 비교
+        if (col.gameObject.tag == "Player")
         {
-            if (obstacle != null) obstacle.enabled = false;
-            anim.SetBool("isOpen", true);
+            // 문 열어주자
+            myAnim.SetTrigger("Open");
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    //만약 문 콜라이더를 빠져나오면...이 함수가 호출
+    void OnTriggerExit(Collider col)
     {
-        if (other.CompareTag("Player"))
+        // 충돌 게임오브젝트의 테그 비교
+        if (col.gameObject.tag == "Player")
         {
-            anim.SetBool("isOpen", false);
-            if (obstacle != null) obstacle.enabled = true;
+            // 문 닫자
+            myAnim.SetTrigger("Close");
         }
     }
 
