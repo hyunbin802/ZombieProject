@@ -10,6 +10,9 @@ TagManager:
   - Enemy
   - Base
   - RoamingPoint
+  - EnemyBody
+  - Bullet
+  - Barrel
   layers:
   - Default
   - TransparentFX
@@ -18,8 +21,8 @@ TagManager:
   - Water
   - UI
   - Barrel
-  - 
-  - 
+  - PLAYER
+  - Enemy
   - 
   - 
   - 
@@ -46,4 +49,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Gage
+    uniqueID: 2158210627
     locked: 0

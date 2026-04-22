@@ -144,13 +144,13 @@ public class EnemyCtrl : MonoBehaviour
     //변수에 팁을 달아줄 수  있다.(인스펙터에서 확인)
     [Tooltip("몬스터의 속도")]
     //Enemy의 속도 셋팅, [SerializeField] 는 [HideInInspector] 와 반대 속성
-    [Range(3f, 7f)] public float speed = 5.0f;
+    [Range(1f, 7f)] public float speed = 3f;
 
     //거리에 따른 상태 체크 변수 
     [Tooltip("몬스터 발견거리!!!")]
-    [Range(10f, 30f)][SerializeField] float findDist = 20.0f;
+    [Range(10f, 20f)][SerializeField] float findDist = 15.0f;
     [Tooltip("몬스터 추적거리!!!")]
-    [Range(10f, 30f)][SerializeField] float traceDist = 15.0f;
+    [Range(10f, 20f)][SerializeField] float traceDist = 11.0f;
     [Tooltip("몬스터 공격거리!!!")]
     [Range(1f, 5f)][SerializeField] float attackDist = 3.0f;
     [Tooltip("몬스터 로밍 시간!!!")]
@@ -368,10 +368,10 @@ public class EnemyCtrl : MonoBehaviour
                     if(enemyKind == MODE_KIND.ENEMY_BOSS)
                     {
                         // 네비게이션의 추적 속도를 현재보다 1.8배
-                        myTraceAgent.speed = speed * 1.5f;
+                        myTraceAgent.speed = speed * 1.8f;
 
                         //애니메이션 속도 변경
-                        _anim[anims.move.name].speed = 1.5f;
+                        _anim[anims.move.name].speed = 1.8f;
 
                         //run 애니메이션 
                         _anim.CrossFade(anims.move.name, 0.3f);
@@ -379,10 +379,10 @@ public class EnemyCtrl : MonoBehaviour
                     else
                     {
                         // 네비게이션의 추적 속도를 현재보다 1.5배
-                        myTraceAgent.speed = speed * 1.2f;
+                        myTraceAgent.speed = speed * 1.5f;
 
                         //애니메이션 속도 변경
-                        _anim[anims.move.name].speed = 1.2f;
+                        _anim[anims.move.name].speed = 1.5f;
 
                         //run 애니메이션 
                         _anim.CrossFade(anims.move.name, 0.3f);
@@ -619,6 +619,70 @@ public class EnemyCtrl : MonoBehaviour
         //로밍 타겟 셋팅
         roamingTarget = roamingCheckPoints[roamingRandcheckPos];
        // Debug.Log("Checking1");
+    }
+
+    // (추가) /////////////////////////////////////////////////////////////////////////////////////
+
+    //일정 확률로 Enemy 타격
+    public void HitEnemy()
+    {
+        int rand = Rand.Range(0, 100);
+        if (rand < 30)
+        {
+            if (randAnim == 0 || randAnim == 1)
+            {
+                isHitTime = Time.time + anims.hit1.length+0.2f;
+                isHit = true;
+            }
+            else if (randAnim == 1 || randAnim == 2)
+            {
+                isHitTime = Time.time + anims.hit1.length+0.2f;
+                isHit = true;
+            }
+        }
+        //animator.SetTrigger("IsHit"); 
+        //SetTrigger로 IsHit Trigger를 발생시키면, Any State에서 Hit으로 전이....
+        //이럴땐 메카님이 확실히 편함
+    }
+
+    // 몬스터 사망 처리
+    public void EnemyDie()
+    {
+        StartCoroutine(this.Die());
+    }
+
+    // Enemy의 사망 처리
+    IEnumerator Die()
+    {
+        // Enemy의를 죽이자
+        isDie = true;
+        //죽는 애니메이션 시작
+        _anim.CrossFade(anims.die.name, 0.3f);
+        //Enemy의 모드를 die로 설정
+        enemyMode = MODE_STATE.DIE;
+        //Enemy의 태그를 Untagged로 변경하여 더이상 플레이어랑 포탑이 찾지 못함
+        this.gameObject.tag = "Untagged";
+        this.gameObject.transform.Find("EnemyBody").tag = "Untagged";
+        //네비게이션 멈추고 (추적 중지) 
+        myTraceAgent.isStopped = true;
+
+        //Enemy에 추가된 모든 Collider를 비활성화(모든 충돌체는 Collider를 상속했음 따라서 다음과 같이 추출 가능)
+        foreach (Collider coll in gameObject.GetComponentsInChildren<Collider>())
+        {
+            coll.enabled = false;
+        }
+
+        //4.5 초후 오브젝트 삭제
+        yield return new WaitForSeconds(4.5f);
+        Destroy(gameObject);
+    }
+
+    //객체 소멸시 정리가 필요한 부분은 여기서...
+    void OnDestroy()
+    {
+        Debug.Log("Destroy");
+        //모든 코루틴을 정지시키자
+        StopAllCoroutines();
     }
 
     //인스펙터에 스크립트 우 클릭시 컨텍스트 메뉴에서 함수호출 가능
