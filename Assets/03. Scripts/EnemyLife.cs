@@ -50,6 +50,40 @@ public class EnemyLife : MonoBehaviour
         }
     }
 
+    //Enemy가 Ray에 맞았을 때 호출되는 콜백 함수
+    void OnCollision(object[] _params)
+    {
+        //Debug.Log(string.Format("info {0} : {1}", _params[0], _params[1]));
+
+        //혈흔 효과 함수를 호출
+        CreateBlood((Vector3)_params[0]);
+
+        //맞은 총알의 파워를 가져와 Enemy의 life를 감소
+        life -= (int)_params[1];
+        //로컬적인 개념으로 머트리얼 셋팅
+        lifeBar.material.SetFloat("_Progress", life / 100.0f);
+
+        // 생명력이 바닥이면 죽이자
+        if (life <= 0)
+        {
+            enemy.EnemyDie();
+        }
+    }
+
+    // 드럼통 폭발 몬스터 사망 처리
+    public void OnCollisionBarrel(Vector3 firePos)
+    {
+        //혈흔 효과 함수를 호출
+        CreateBlood(firePos);
+
+        //Enemy의 life를 0 으로
+        life = 0;
+        //로컬적인 개념으로 머트리얼 셋팅
+        lifeBar.material.SetFloat("_Progress", life / 100.0f);
+
+        enemy.EnemyBarrelDie(firePos);
+    }
+
     // 블러드 연출을 시작해주는 코루틴함수 호출
     void CreateBlood(Vector3 pos)
     {

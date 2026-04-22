@@ -167,6 +167,11 @@ public class EnemyCtrl : MonoBehaviour
     private bool nonHungry;
     private float isHitTime;
 
+    // (추가)
+
+    // 리지드바디 (연출)
+    Rigidbody rbody;
+
     void Awake()
     {
         //레퍼런스 할당 
@@ -175,6 +180,11 @@ public class EnemyCtrl : MonoBehaviour
         _anim = GetComponentInChildren<Animation>();
         //자기 자신의 Transform 연결
         myTr = GetComponent<Transform>();
+
+        // (추가)
+
+        // 리지드 바디 연결
+        rbody = GetComponent<Rigidbody>();
     }
 
     // Start is called before the first frame update
@@ -243,7 +253,6 @@ public class EnemyCtrl : MonoBehaviour
                 hungry = true;
                 nonHungryTime = Time.time + nonHungryTimeSet + Rand.Range(10f, 15f);
                 nonHungry = true;
-
             }
         }
 
@@ -257,7 +266,6 @@ public class EnemyCtrl : MonoBehaviour
                 hungryTime = Time.time + hungryTimeSet + Rand.Range(10f, 15f);
                 hungry = false;
             }
-
         }
 
         //공격 받았을 경우 
@@ -268,7 +276,6 @@ public class EnemyCtrl : MonoBehaviour
                isHit = false;
             }
          }
-
     }
 
     /*
@@ -486,7 +493,6 @@ public class EnemyCtrl : MonoBehaviour
 
                     //사운드 
 
-
                     //네비게이션 멈추고 (추적 중지) 
                     myTraceAgent.isStopped = true;
 
@@ -505,7 +511,7 @@ public class EnemyCtrl : MonoBehaviour
                         // hit1 애니메이션 
                         _anim.CrossFade(anims.hit1.name, 0.3f);
                     }
-                    else if (randAnim == 1 || randAnim == 2)
+                    else if (randAnim == 2 || randAnim == 3)
                     {
                         // hit2 애니메이션 
                         _anim.CrossFade(anims.hit2.name, 0.3f);
@@ -621,7 +627,7 @@ public class EnemyCtrl : MonoBehaviour
        // Debug.Log("Checking1");
     }
 
-    // (추가) /////////////////////////////////////////////////////////////////////////////////////
+    ////(추가)///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //일정 확률로 Enemy 타격
     public void HitEnemy()
@@ -631,12 +637,12 @@ public class EnemyCtrl : MonoBehaviour
         {
             if (randAnim == 0 || randAnim == 1)
             {
-                isHitTime = Time.time + anims.hit1.length+0.2f;
+                isHitTime = Time.time + anims.hit1.length + 0.2f;
                 isHit = true;
             }
-            else if (randAnim == 1 || randAnim == 2)
+            else if (randAnim == 2 || randAnim == 3)
             {
-                isHitTime = Time.time + anims.hit1.length+0.2f;
+                isHitTime = Time.time + anims.hit1.length + 0.2f;
                 isHit = true;
             }
         }
@@ -677,13 +683,57 @@ public class EnemyCtrl : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // 드럼통 폭발 몬스터 사망 처리
+    public void EnemyBarrelDie( Vector3 firePos )
+    {
+        StartCoroutine(this.BarrelDie(firePos));
+    }
+
+    //Enemy가 드럼통 폭발에 맞았을 때 호출되는 콜백 함수
+    IEnumerator BarrelDie(Vector3 firePos)
+    {
+        // Enemy의를 죽이자
+        isDie = true;
+        //죽는 애니메이션 시작
+        _anim.CrossFade(anims.die.name, 0.3f);
+        //Enemy의 모드를 die로 설정
+        enemyMode = MODE_STATE.DIE;
+        //Enemy의 태그를 Untagged로 변경하여 더이상 플레이어랑 포탑이 찾지 못함
+        this.gameObject.tag = "Untagged";
+        this.gameObject.transform.Find("EnemyBody").tag = "Untagged";
+        //네비게이션 멈추고 (추적 중지) 
+        myTraceAgent.enabled = false;
+
+        rbody.isKinematic = false;
+
+        //무게 변경 (더 멀리 터지게)
+        rbody.mass = 1.0f;
+        //Rigidbody.AddExplosionForce(폭발력, 원점, 반경, 위로 솟구치는 힘);
+        rbody.AddExplosionForce(1000.0f, firePos, 15.0f, 300.0f);
+
+        //4.5 초후 isKinematic = true 해서 Enemy 콜라이더 해제해도 바닥으로 안떨어지게~
+        yield return new WaitForSeconds(3.5f);
+        rbody.isKinematic = true;
+
+        //Enemy에 추가된 모든 Collider를 비활성화(모든 충돌체는 Collider를 상속했음 따라서 다음과 같이 추출 가능)
+        foreach (Collider coll in gameObject.GetComponentsInChildren<Collider>())
+        {
+            coll.enabled = false;
+        }
+
+        //4.5 초후 오브젝트 삭제
+        yield return new WaitForSeconds(4.5f);
+        Destroy(gameObject);
+    }
+
     //객체 소멸시 정리가 필요한 부분은 여기서...
     void OnDestroy()
     {
-        Debug.Log("Destroy");
+        //Debug.Log("Destroy");
         //모든 코루틴을 정지시키자
         StopAllCoroutines();
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //인스펙터에 스크립트 우 클릭시 컨텍스트 메뉴에서 함수호출 가능
     [ContextMenu("FuncStart")]
