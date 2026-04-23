@@ -45,6 +45,7 @@ Thumbs.db
 *.unitypackage
 *.app
 *.exe
+/AssetBundles/
 
 # Crash reports
 sysinfo.txt
