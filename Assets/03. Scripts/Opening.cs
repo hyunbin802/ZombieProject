@@ -12,7 +12,7 @@ public class Opening : MonoBehaviour
     private string url = "";
 
     // AssetBundle의 버전
-    private uint version = 1;
+    private uint version = 3;
 
     // 다운로드 완료 여부
     private bool isDownloadDone = false;
