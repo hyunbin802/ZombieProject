@@ -472,13 +472,27 @@ public class PlayerCtrl : MonoBehaviour
 
              // 자신과 가장 가까운 플레이어 찾음
              Enemys = GameObject.FindGameObjectsWithTag("Enemy");
+             if (Enemys == null || Enemys.Length == 0)
+             {
+                 if (!barrelFire)
+                 {
+                     EnemyTarget = null;
+                 }
+                 continue;
+             }
+
              Transform EnemyTargets = Enemys[0].transform;
              float dist = (EnemyTargets.position - myTr.position).sqrMagnitude;
              foreach (GameObject _Enemy in Enemys)
              {
-                 if ((_Enemy.transform.position - myTr.position).sqrMagnitude < dist)
+                 if (_Enemy == null)
                  {
-                     EnemyTargets = _Enemy.transform;
+                     continue;
+                 }
+
+                  if ((_Enemy.transform.position - myTr.position).sqrMagnitude < dist)
+                  {
+                      EnemyTargets = _Enemy.transform;
                      dist = (EnemyTargets.position - myTr.position).sqrMagnitude;
                  }
              }
@@ -501,8 +515,15 @@ public class PlayerCtrl : MonoBehaviour
          {
              yield return new WaitForSeconds(0.2f);
 
-             // 여기선 불 필요
-             // dist1 = (EnemyTarget.position - myTr.position).sqrMagnitude;
+             if (EnemyTarget == null)
+             {
+                 isEnemyDetected = false;
+                 fireAction = false;
+                 continue;
+             }
+
+              // 여기선 불 필요
+              // dist1 = (EnemyTarget.position - myTr.position).sqrMagnitude;
              dist2 = Vector3.Distance(myTr.position, EnemyTarget.position);
 
              //네비게이션이 중지가 아니면 

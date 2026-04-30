@@ -200,10 +200,21 @@ public class BaseCtrl : MonoBehaviour
 
             // 자신과 가장 가까운 플레이어 찾음
             Enemys = GameObject.FindGameObjectsWithTag("EnemyBody");
+            if (Enemys == null || Enemys.Length == 0)
+            {
+                EnemyTarget = null;
+                continue;
+            }
+
             Transform EnemyTargets = Enemys[0].transform;
             float dist = (EnemyTargets.position - head.position).sqrMagnitude;
             foreach (GameObject _Enemy in Enemys)
             {
+                if (_Enemy == null)
+                {
+                    continue;
+                }
+
                 if ((_Enemy.transform.position - head.position).sqrMagnitude < dist)
                 {
                     EnemyTargets = _Enemy.transform;
@@ -221,6 +232,12 @@ public class BaseCtrl : MonoBehaviour
         while (!isDie)
         {
             yield return new WaitForSeconds(0.2f);
+
+            if (EnemyTarget == null)
+            {
+                isEnemyDetected = false;
+                continue;
+            }
 
             // 여기선 불 필요
             // dist1 = (EnemyTarget.position - head.position).sqrMagnitude;
